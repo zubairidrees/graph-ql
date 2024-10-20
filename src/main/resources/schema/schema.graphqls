@@ -1,13 +1,3 @@
-directive @constraint(
-    minLength: Int
-    maxLength: Int
-    min: Float
-    max: Float
-    pattern: String
-    format: String
-) on INPUT_FIELD_DEFINITION
-
-# Entity Types
 type Department {
     id: ID!
     name: String!
@@ -28,33 +18,29 @@ type Task {
     employee: Employee
 }
 
-# Query: No Constraints Applied Here
 type Query {
     departments: [Department]
     employees: [Employee]
     tasks: [Task]
 }
 
-# Mutation Inputs with Constraints
 input DepartmentInput {
-    name: String! @constraint(minLength: 3, maxLength: 50)
+    name: String!
 }
 
 input EmployeeInput {
-    name: String! @constraint(minLength: 2)
-    position: String! @constraint(minLength: 3, maxLength: 30)
+    name: String!
+    position: String!
     departmentId: ID!
 }
 
 input TaskInput {
-    description: String! @constraint(minLength: 5, maxLength: 100)
+    description: String!
     employeeId: ID!
 }
 
-# Mutation: Constraints Ensure Valid Input Data
 type Mutation {
     createDepartment(input: DepartmentInput): Department
     createEmployee(input: EmployeeInput): Employee
     createTask(input: TaskInput): Task
 }
-
